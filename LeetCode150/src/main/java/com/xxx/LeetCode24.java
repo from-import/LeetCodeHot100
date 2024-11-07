@@ -2,28 +2,31 @@ package com.xxx;
 
 public class LeetCode24 {
     public ListNode swapPairs(ListNode head) {
-        // 1. 考虑特殊情况
-        if(head == null || head.next == null){
+        // 1. 处理特殊情况：链表为空或只有一个节点
+        if (head == null || head.next == null) {
             return head;
         }
 
-        // 2. 新建dummy，防止出现异常
-        ListNode dummy = new ListNode();
+        // 2. 创建虚拟头节点，简化边界条件处理
+        ListNode dummy = new ListNode(0);
         dummy.next = head;
 
-        // 3. 采用prev(head 和 prev 都需要更新到下一对节点的开始位置)
+        // 3. 初始化前驱节点
         ListNode prev = dummy;
-        while(head != null && head.next != null){
-            ListNode slow = head;
-            ListNode fast = head.next;
-            // 两两交换
-            slow.next = fast.next;
-            fast.next = slow;
-            prev.next = fast;
+
+        // 4. 遍历链表，两两交换相邻节点
+        while (head != null && head.next != null) {
+            ListNode first = head;
+            ListNode second = head.next;
+
+            // 交换节点
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
 
             // 更新指针位置
-            prev = slow;
-            head = slow.next;
+            prev = first;
+            head = first.next;
         }
 
         return dummy.next;
