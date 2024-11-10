@@ -21,4 +21,21 @@ public class LeetCode139 {
         }
         return dp[length] == 1 ? true : false;
     }
+
+    // 添加同类型题目 ： 要求找到有多少种拼接的可能性？
+    public int wordBreakCount(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<>(wordDict);  // 将 wordDict 转为 HashSet 加速查找
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1;  // 空字符串有一种方式（什么都不拼接）
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] > 0 && wordSet.contains(s.substring(j, i))) {
+                    dp[i] += dp[j];  // 将 dp[j] 的值累加到 dp[i]
+                }
+            }
+        }
+
+        return dp[s.length()];
+    }
 }
