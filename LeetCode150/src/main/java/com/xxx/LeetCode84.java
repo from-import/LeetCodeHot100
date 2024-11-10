@@ -3,7 +3,7 @@ package com.xxx;
 import java.util.Stack;
 
 public class LeetCode84 {
-    // 方法1 采用逐层高度遍历的方式，以每一层为基础来计算可以形成的矩形面积
+    // 方法1. 采用逐层高度遍历的方式，以每一层为基础来计算可以形成的矩形面积
     public int largestRectangleArea(int[] heights) {
         if (heights.length == 1){
             return heights[0];
@@ -31,7 +31,7 @@ public class LeetCode84 {
         return res;
     }
 
-    // 方法2 单调栈
+    // 方法2. 单调栈
     public int largestRectangleArea2(int[] heights) {
         int maxArea = 0;
         int n = heights.length;
