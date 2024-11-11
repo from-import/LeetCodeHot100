@@ -18,9 +18,11 @@ public class LeetCode72 {
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    // 如果 word1[i-1] == word2[j-1]，那么不需要任何操作，只需看看 dp[i-1][j-1]。
                     dp[i][j] = dp[i - 1][j - 1];
                 }
                 else {
+                    // 如果 word1[i-1] != word2[j-1]，那么我们需要做一次操作：插入、删除或替换，然后基于之前的最小操作数计算出最少的操作次数。
                     dp[i][j] = Math.min(dp[i - 1][j] + 1, // 删除
                             Math.min(dp[i][j - 1] + 1, // 插入
                                     dp[i - 1][j - 1] + 1)); // 替换
