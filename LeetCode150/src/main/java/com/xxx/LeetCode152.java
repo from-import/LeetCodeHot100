@@ -2,6 +2,7 @@ package com.xxx;
 
 public class LeetCode152 {
     public int maxProduct(int[] nums) {
+
         int length = nums.length;
 
         // 初始化 dp 数组
@@ -28,5 +29,7 @@ public class LeetCode152 {
         }
 
         return maxProduct;
+
+
     }
 }
