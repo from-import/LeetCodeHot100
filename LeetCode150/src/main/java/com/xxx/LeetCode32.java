@@ -3,6 +3,12 @@ package com.xxx;
 import java.util.Stack;
 
 public class LeetCode32 {
+    /*
+    遇到左括号 '(' 时，将其索引压入栈。
+    遇到右括号 ')' 时，弹出栈顶元素，并检查栈是否为空：
+    如果栈为空，说明当前 ')' 没有匹配的 '('，此时将该右括号的索引压入栈，作为新的“无匹配右括号”的位置，用于之后的长度计算。
+    如果栈不为空，计算当前的有效长度，即 i - stack.peek()，并更新 maxLength。
+     */
     public int longestValidParentheses(String s) {
         Stack<Integer> stack = new Stack<>();
         int maxLength = 0;
