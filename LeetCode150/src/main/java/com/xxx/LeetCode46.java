@@ -6,49 +6,35 @@ import java.util.Deque;
 import java.util.List;
 
 public class LeetCode46 {
+    private boolean[] used = new boolean[10];
+    private List<Integer> path = new ArrayList<>();
+    private List<List<Integer>> res = new ArrayList<>();
+
     public List<List<Integer>> permute(int[] nums) {
-        int len = nums.length;
-        // 使用一个动态数组保存所有可能的全排列
-        List<List<Integer>> res = new ArrayList<>();
-        if (len == 0) {
-            return res;
-        }
-
-        boolean[] used = new boolean[len];
-        Deque<Integer> path = new ArrayDeque<>(len);
-
-        dfs(nums, len, 0, path, used, res);
+        used = new boolean[nums.length]; // 根据 nums 长度初始化
+        backTracking(nums);
         return res;
     }
 
-    private void dfs(int[] nums, int len, int depth,
-                     Deque<Integer> path, boolean[] used,
-                     List<List<Integer>> res) {
-        if (depth == len) {
+    void backTracking(int[] nums) {
+        if (path.size() == nums.length) {
             res.add(new ArrayList<>(path));
             return;
         }
 
-        for (int i = 0; i < len; i++) {
-            if (!used[i]) {
-                path.addLast(nums[i]);
-                used[i] = true;
-
-                System.out.println("  递归之前 => " + path);
-                dfs(nums, len, depth + 1, path, used, res);
-
-                used[i] = false;
-                path.removeLast();
-                System.out.println("递归之后 => " + path);
+        for (int i = 0; i < nums.length; i++) {
+            if (used[i]) {
+                continue;
             }
-        }
-    }
+            // 添加结果到path
+            used[i] = true;
+            path.add(nums[i]);
 
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
-        LeetCode46 solution = new LeetCode46();
-        List<List<Integer>> lists = solution.permute(nums);
-        System.out.println(lists);
+            // 递归调用
+            backTracking(nums);
+            path.remove(path.size() - 1); // 回溯
+            used[i] = false;
+        }
     }
 }
 
