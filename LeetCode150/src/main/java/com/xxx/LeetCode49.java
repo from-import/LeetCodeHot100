@@ -5,26 +5,35 @@ import java.util.*;
 class LeetCode49 {
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List<String>> m = new HashMap<>();
+        List<List<String>> res = new ArrayList<>();
+        HashMap<Integer, List<String>> map = new HashMap<>();
 
-        for (String str : strs) {
-            char[] s = str.toCharArray();
-            Arrays.sort(s);
-            // s 相同的字符串分到同一组
-            // m.computeIfAbsent(new String(s), k -> new ArrayList<>()).add(str);
+        for (String s : strs) {
+            int hashKey = wordToHash(s);
 
-            // 将字符数组 s 转换为字符串 key
-            String key = new String(s);
-            // 检查 Map 中是否存在 key，如果不存在就放入一个空的 ArrayList
-            if (!m.containsKey(key)) {
-                m.put(key, new ArrayList<>());
+            // 如果不存在键，初始化对应的列表
+            if (!map.containsKey(hashKey)) {
+                map.put(hashKey, new ArrayList<>());
             }
-            // 将当前字符串 str 添加到对应的列表中
-            m.get(key).add(str);
-        }
-        return new ArrayList<>(m.values());
 
+            map.get(hashKey).add(s);
+        }
+
+        // 遍历 HashMap，将每个分组添加到结果列表
+        for (Map.Entry<Integer, List<String>> entry : map.entrySet()) {
+            res.add(entry.getValue()); // 只需要分组的值部分
+        }
+
+        return res; // 返回分组结果
     }
+
+    public int wordToHash(String s) {
+        char[] res = s.toCharArray();
+        Arrays.sort(res);
+        String finalString = new String(res);
+        return finalString.hashCode();
+    }
+
 
 }
 
