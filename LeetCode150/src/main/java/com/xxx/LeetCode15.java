@@ -20,8 +20,6 @@ public class LeetCode15 {
                 triplet.add(nums[i]);          // 第一个数字
                 triplet.add(pair.get(0));      // 二元组的第一个数字
                 triplet.add(pair.get(1));      // 二元组的第二个数字
-
-                Collections.sort(triplet);     // 对三元组排序
                 uniqueTriplets.add(triplet);   // 将排序后的三元组加入 Set 去重
             }
 
