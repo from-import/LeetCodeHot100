@@ -26,4 +26,32 @@ public class LeetCode3 {
         // Go
         return res;
     }
+
+    // 笨点的方法
+    public int lengthOfLongestSubstring2(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        int maxLength = 1;
+        HashSet<Character> set = new HashSet<>();
+        char[] string = s.toCharArray();
+        int length = string.length;
+        int left = 0;
+        int right = 1;
+        set.add(string[left]);
+        while(right < length) {
+            if (set.contains(string[right])) {
+                while(string[left] != string[right]) {
+                    set.remove(string[left]);
+                    left++;
+                }
+                left++;
+            }
+            maxLength = Math.max(maxLength, right - left + 1);
+            set.add(string[right]);
+            right++;
+        }
+
+        return maxLength;
+    }
 }
