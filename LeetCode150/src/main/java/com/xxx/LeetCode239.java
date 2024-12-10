@@ -1,5 +1,8 @@
 package com.xxx;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class LeetCode239 {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int[] res = new int[nums.length - k + 1];
@@ -47,5 +50,36 @@ public class LeetCode239 {
         }
 
         return res;
+    }
+
+    // 双端队列解法
+    public int[] maxSlidingWindow3(int[] nums, int k) {
+        if (nums == null || k <= 0) {
+            return new int[0];
+        }
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        Deque<Integer> deque = new ArrayDeque<>(); // 双端队列
+
+        for (int i = 0; i < n; i++) {
+            // 移除队列中不在当前窗口内的元素
+            if (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            // 移除队列中所有小于当前元素的元素
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // 添加当前元素的索引
+            deque.offerLast(i);
+
+            // 当窗口大小达到k时，将队列头部的元素加入结果
+            if (i >= k - 1) {
+                result[i - k + 1] = nums[deque.peekFirst()];
+            }
+        }
+        return result;
     }
 }
