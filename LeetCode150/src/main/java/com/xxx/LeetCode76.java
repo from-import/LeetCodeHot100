@@ -54,5 +54,60 @@ public class LeetCode76 {
         // 根据 minLength 返回结果
         return minLength == Integer.MAX_VALUE ? "" : s.substring(minLeft, minLeft + minLength);
     }
+
+    // 滑动窗口+哈希表
+    public static String minWindow2(String s, String t) {
+        if (s == null || t == null || s.length() < t.length()) {
+            return "";
+        }
+
+        // 统计 t 中每个字符的频率
+        HashMap<Character, Integer> tCount = new HashMap<>();
+        for (char c : t.toCharArray()) {
+            tCount.put(c, tCount.getOrDefault(c, 0) + 1);
+        }
+
+        // 滑动窗口
+        HashMap<Character, Integer> windowCount = new HashMap<>();
+        int left = 0, right = 0;
+        int required = tCount.size();
+        int formed = 0;
+        int[] ans = {-1, 0, 0}; // {窗口大小, 左边界, 右边界}
+
+        while (right < s.length()) {
+            // 增加右边界字符
+            char c = s.charAt(right);
+            windowCount.put(c, windowCount.getOrDefault(c, 0) + 1);
+
+            // 如果窗口内某字符的频率满足 t 的要求
+            if (tCount.containsKey(c) && windowCount.get(c).intValue() == tCount.get(c).intValue()) {
+                formed++;
+            }
+
+            // 当窗口内字符频率满足所有要求时，尝试收缩窗口
+            while (left <= right && formed == required) {
+                c = s.charAt(left);
+
+                // 更新最小窗口
+                if (ans[0] == -1 || right - left + 1 < ans[0]) {
+                    ans[0] = right - left + 1;
+                    ans[1] = left;
+                    ans[2] = right;
+                }
+
+                // 左边界字符移出窗口
+                windowCount.put(c, windowCount.get(c) - 1);
+                if (tCount.containsKey(c) && windowCount.get(c).intValue() < tCount.get(c).intValue()) {
+                    formed--;
+                }
+
+                left++;
+            }
+
+            right++;
+        }
+
+        return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
+    }
 }
 
