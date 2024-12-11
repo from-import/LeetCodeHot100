@@ -1,27 +1,41 @@
 package com.xxx;
 
 public class LeetCode53 {
+    // 前缀和解法
     public int maxSubArray(int[] nums) {
-        int[] sumNums = new int[nums.length];
-        int countNow = 0;
+        int length = nums.length;
+        int[] prefixSum = new int[length];
+        int maxNum = Integer.MIN_VALUE;
+        int minNum = 0;
+
+        // 构造前缀和数组
         int count = 0;
-
-        // 构造前缀和array
+        int sumNow = 0;
         for (int num : nums) {
-            countNow += num;
-            sumNums[count++] = countNow;
+            sumNow += num;
+            prefixSum[count++] = sumNow;
         }
 
-        int res = Integer.MIN_VALUE;
-        int minSum = 0;
-
-        // 遍历一次前缀和array,维护两个变量：
-        // res:最大和
-        // minSum:遍历到目前的最小前缀和
-        for (int sum : sumNums) {
-            res = Math.max(res, sum - minSum);
-            minSum = Math.min(minSum, sum);
+        // 遍历前缀和数组，找到最大和
+        for (int sum : prefixSum) {
+            maxNum = Math.max(maxNum, sum - minNum);
+            minNum = Math.min(minNum, sum);
         }
-        return res;
+        return maxNum;
+    }
+
+    // dp 解法
+    public int maxSubArray2(int[] nums) {
+        // dp实现最大连续子数组和
+        int length = nums.length;
+        int[] dp = new int[length];
+        dp[0] = nums[0];
+        int maxSum = dp[0]; // 初始化最大和
+
+        for (int i = 1; i < length; i++) {
+            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]);
+            maxSum = Math.max(maxSum, dp[i]);
+        }
+        return maxSum;
     }
 }
