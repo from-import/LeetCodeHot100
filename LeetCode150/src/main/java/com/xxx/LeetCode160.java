@@ -6,12 +6,10 @@ public class LeetCode160 {
     public class Solution {
         // 解法1. 双指针解法
         public ListNode getIntersectionNode1(ListNode headA, ListNode headB) {
-            if (headA == null || headB == null){
-                return null;
-            }
             ListNode node1 = headA;
             ListNode node2 = headB;
-            while (node1 != node2){
+
+            while (node1 != node2) {
                 node1 = (node1 == null) ? headB : node1.next;
                 node2 = (node2 == null) ? headA : node2.next;
             }
@@ -83,7 +81,7 @@ public class LeetCode160 {
         }
 
         // 解法4. 将链表A的结尾接到链表B，快慢指针判环
-        public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        public ListNode getIntersectionNode4(ListNode headA, ListNode headB) {
             if (headA == null || headB == null) {
                 return null;
             }
