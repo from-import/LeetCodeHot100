@@ -2,43 +2,47 @@ package com.xxx;
 
 public class LeetCode2 {
 
-    /**
-     * 存在int溢出风险
-     * @param l1
-     * @param l2
-     * @return
-     */
+    // 逻辑最易懂的写法 时间复杂度 O(Max(M,N))
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        char[] res = new char[101];
-        int target = 0;
-        int ten = 1;
-        while(l1 != null){
-            target += ten * l1.val;
+        boolean check = false;
+        ListNode ori = new ListNode();
+        ListNode dummy = new ListNode();
+        dummy.next = ori;
+
+        while (l1 != null && l2 != null) {
+            int res = l1.val + l2.val;
+            if (check) {
+                res += 1;
+                check = false;
+            }
+            if (res >= 10) {
+                res -= 10;
+                check = true;
+            }
+            ori.next = new ListNode(res);
+            ori = ori.next;
             l1 = l1.next;
-            ten *= 10;
-        }
-        ten = 1;
-        while(l2 != null){
-            target += ten * l2.val;
             l2 = l2.next;
-            ten *= 10;
         }
-        // 特殊情况处理：如果结果为 0，则返回单节点链表 0
-        if (target == 0) {
-            return new ListNode(0);
+        ListNode notNull = (l1 == null) ? l2 : l1;
+        while (notNull != null) {
+            int res = notNull.val;
+            if (check) {
+                res += 1;
+                check = false;
+            }
+            if (res == 10) {
+                res = 0;
+                check = true;
+            }
+            ori.next = new ListNode(res);
+            ori = ori.next;
+            notNull = notNull.next;
         }
-        // 将 target 拆分成链表
-        ListNode dummyHead = new ListNode(0);
-        ListNode current = dummyHead;
-
-        while (target > 0) {
-            int digit = target % 10;
-            current.next = new ListNode(digit);
-            current = current.next;
-            target /= 10;
+        if (check) {
+            ori.next = new ListNode(1);
         }
-
-        return dummyHead.next;
+        return dummy.next.next;
     }
 
     /**
