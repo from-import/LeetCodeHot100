@@ -1,14 +1,15 @@
 package com.xxx;
 
 public class LeetCode206 {
+    // 最简写法
     public ListNode reverseList(ListNode head) {
-        ListNode node = head;
         ListNode pre = null;
-        while (node != null) {
-            ListNode temp = node.next;
-            node.next = pre;
-            pre = node;
-            node = temp;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
         }
         return pre;
     }
