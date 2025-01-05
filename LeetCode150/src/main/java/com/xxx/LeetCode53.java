@@ -4,24 +4,20 @@ public class LeetCode53 {
     // 前缀和解法
     public int maxSubArray(int[] nums) {
         int length = nums.length;
+        int res = nums[0];
         int[] prefixSum = new int[length];
-        int maxNum = Integer.MIN_VALUE;
-        int minNum = 0;
+        prefixSum[0] = nums[0];
 
-        // 构造前缀和数组
-        int count = 0;
-        int sumNow = 0;
-        for (int num : nums) {
-            sumNow += num;
-            prefixSum[count++] = sumNow;
+        for (int i = 1; i < length; i++) {
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
         }
 
-        // 遍历前缀和数组，找到最大和
-        for (int sum : prefixSum) {
-            maxNum = Math.max(maxNum, sum - minNum);
-            minNum = Math.min(minNum, sum);
+        int minSum = 0;
+        for (int i = 0; i < length; i++) {
+            res = Math.max(res, prefixSum[i] - minSum);
+            minSum = Math.min(minSum, prefixSum[i]);
         }
-        return maxNum;
+        return res;
     }
 
     // dp 解法
