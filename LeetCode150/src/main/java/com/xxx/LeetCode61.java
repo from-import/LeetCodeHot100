@@ -19,4 +19,9 @@ public class LeetCode61 {
         return 100001;
         // test
     }
+
+    public static void main(String[] args) {
+        LeetCode61 leetCode61 = new LeetCode61();
+        System.out.println("hello world");
+    }
 }
