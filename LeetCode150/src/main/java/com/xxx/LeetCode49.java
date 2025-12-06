@@ -32,6 +32,25 @@ class LeetCode49 {
     }
 
 
+
+    public List<List<String>> groupAnagrams2(String[] strs) {
+        if (strs.length == 0) {
+            return new ArrayList<>();
+        }
+        Map<String, List<String>> resultMap = new HashMap<>();
+        for (String str : strs) {
+            char[] keyCharacter = str.toCharArray();
+            Arrays.sort(keyCharacter);
+
+            List<String> strings = resultMap.computeIfAbsent(
+                    new String(keyCharacter), k -> new ArrayList<>());
+            strings.add(str);
+        }
+
+        return new ArrayList<>(resultMap.values());
+    }
+
+
 }
 
 
