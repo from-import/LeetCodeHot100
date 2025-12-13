@@ -2,8 +2,8 @@ package com.xxx;
 
 public class LeetCode34 {
     public int[] searchRange(int[] nums, int target) {
-        int arg1 = leftBinarySearch(nums, target);
-        int arg2 = rightBinarySearch(nums, target) - 1;
+        int arg1 = lowerBinarySearch(nums, target);
+        int arg2 = upperBinarySearch(nums, target) - 1;
 
         if (arg1 == nums.length || nums[arg1] != target) {
             arg1 = -1;
@@ -14,34 +14,39 @@ public class LeetCode34 {
 
         return new int[]{arg1, arg2};
     }
-    public int leftBinarySearch(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length - 1;
-        while (start <= end) {
-            int index = (start + end) / 2;
-            int value = nums[index];
 
-            if (value < target) {
-                start = index + 1;
+    // return first place > t
+    private int upperBinarySearch(int[] nums, int target) {
+        int length = nums.length;
+        int left = 0;
+        int right = length - 1;
+        while (left <= right) {
+            int index = (left + right) / 2;
+            int value = nums[index];
+            if (value <= target) {
+                left = index + 1;
             } else {
-                end = index - 1;
+                right = index - 1;
             }
+
         }
-        return start;
+        return left;
     }
-    public int rightBinarySearch(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length - 1;
-        while (start <= end) {
-            int index = (start + end) / 2;
-            int value = nums[index];
 
-            if (value > target) {
-                end = index - 1;
+    // return first place ≥ t
+    private int lowerBinarySearch(int[] nums, int target) {
+        int length = nums.length;
+        int left = 0;
+        int right = length - 1;
+        while (left <= right) {
+            int index = (left + right) / 2;
+            int value = nums[index];
+            if (value >= target) {
+                right = index - 1;
             } else {
-                start = index + 1;
+                left = index + 1;
             }
         }
-        return start;
+        return left;
     }
 }
