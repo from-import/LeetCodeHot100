@@ -35,4 +35,37 @@ public class LeetCode153 {
 
         return 0; // 未找到翻转点，数组未旋转
     }
+
+    public int findMin2(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            int middle = left + (right - left) / 2;
+            // if right is sorted
+            if (nums[middle] <= nums[right]) {
+                right = middle;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return nums[left];
+    }
+
+    public int findMin3(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int minValue = nums[0];
+        while (left <= right) {
+            int middle = (left + right) / 2;
+            // if left is sorted
+            if (nums[left] <= nums[middle]) {
+                minValue = Math.min(minValue, nums[left]);
+                left = middle + 1;
+            } else {
+                minValue = Math.min(minValue, nums[middle]);
+                right = middle - 1;
+            }
+        }
+        return minValue;
+    }
 }
