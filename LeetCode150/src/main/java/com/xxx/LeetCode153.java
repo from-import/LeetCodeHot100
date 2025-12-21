@@ -43,7 +43,7 @@ public class LeetCode153 {
             int middle = left + (right - left) / 2;
             // if right is sorted
             if (nums[middle] <= nums[right]) {
-                right = middle;
+                right = middle;153. Find Minimum in Rotated Sorted Array
             } else {
                 left = middle + 1;
             }
@@ -55,16 +55,20 @@ public class LeetCode153 {
         int left = 0;
         int right = nums.length - 1;
         int minValue = nums[0];
+
         while (left <= right) {
-            int middle = (left + right) / 2;
-            // if left is sorted
-            if (nums[left] <= nums[middle]) {
-                minValue = Math.min(minValue, nums[left]);
+            int middle = left + (right - left) / 2;
+            int middleValue = nums[middle];
+
+            // check if left part is sorted
+            if (nums[left] <= middleValue) {
+                minValue = Math.min(nums[left], minValue);
                 left = middle + 1;
             } else {
-                minValue = Math.min(minValue, nums[middle]);
+                minValue =  Math.min(nums[middle], minValue);
                 right = middle - 1;
             }
+
         }
         return minValue;
     }
