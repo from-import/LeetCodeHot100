@@ -50,6 +50,21 @@ class LeetCode49 {
         return new ArrayList<>(resultMap.values());
     }
 
+    public List<List<String>> groupAnagrams3(String[] strs) {
+        Map<String, List<String>> stringListMap = new HashMap<>();
+        for (String s : strs) {
+            String sortedString = sortString(s);
+            stringListMap.computeIfAbsent(sortedString, k -> new ArrayList<String>()).add(s);
+        }
+        return stringListMap.values().stream().toList();
+    }
+
+    private String sortString(String str) {
+        char[] characters = str.toCharArray();
+        Arrays.sort(characters);
+        return Arrays.toString(characters);
+    }
+
 
 }
 
