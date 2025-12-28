@@ -43,7 +43,7 @@ public class LeetCode153 {
             int middle = left + (right - left) / 2;
             // if right is sorted
             if (nums[middle] <= nums[right]) {
-                right = middle;153. Find Minimum in Rotated Sorted Array
+                right = middle;
             } else {
                 left = middle + 1;
             }
