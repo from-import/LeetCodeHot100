@@ -51,18 +51,19 @@ class LeetCode49 {
     }
 
     public List<List<String>> groupAnagrams3(String[] strs) {
-        Map<String, List<String>> stringListMap = new HashMap<>();
+        Map<String, List<String>> stringMap = new HashMap<>();
         for (String s : strs) {
             String sortedString = sortString(s);
-            stringListMap.computeIfAbsent(sortedString, k -> new ArrayList<String>()).add(s);
+            stringMap.computeIfAbsent(s, k->new ArrayList<String>()).add(s);
         }
-        return stringListMap.values().stream().toList();
+        return stringMap.values().stream().toList();
+
     }
 
-    private String sortString(String str) {
-        char[] characters = str.toCharArray();
+    private String sortString(String s) {
+        char[] characters = s.toCharArray();
         Arrays.sort(characters);
-        return Arrays.toString(characters);
+        return characters.toString();
     }
 
 
