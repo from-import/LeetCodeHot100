@@ -36,7 +36,7 @@ public class LeetCode560 {
         return count;
     }
 
-    public int subarraySum(int[] nums, int k) {
+    public int subarraySum3(int[] nums, int k) {
         int[] prefix = new int[nums.length];
         prefix[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
@@ -47,9 +47,9 @@ public class LeetCode560 {
         count.put(0, 1);
         int res = 0;
 
-        for (int p : prefix) {
-            res += count.getOrDefault(p - k, 0);
-            count.put(p, count.getOrDefault(p, 0) + 1);
+        for (int pre : prefix) {
+            res += count.getOrDefault(pre - k, 0);
+            count.put(pre, count.getOrDefault(pre, 0) + 1);
         }
         return res;
 
