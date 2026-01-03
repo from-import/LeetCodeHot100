@@ -15,8 +15,18 @@ public class LeetCode55 {
         return false;
     }
 
-    public static void main(String[] args) {
-        int[] nums = new int[]{2,0,0};
-        System.out.println(canJump(nums));
+    public boolean canJump2(int[] nums) {
+        int far = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > far) {
+                return false;
+            }
+            far = Math.max(far, i + nums[i]);
+            if (far >= nums.length - 1) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }
