@@ -1,6 +1,7 @@
 package com.xxx;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LeetCode763 {
@@ -45,5 +46,38 @@ public class LeetCode763 {
         }
 
         return partitions;
+    }
+
+    public List<Integer> partitionLabels2(String s) {
+        int[] last = new int[26];
+        Arrays.fill(last, -1);
+        char[] arrayChar = s.toCharArray();
+        int count = 0;
+        for (char c : arrayChar) {
+            int index = idx(c);
+            last[index] = Math.max(count, last[index]);
+            count++;
+        }
+        List<Integer> result = new ArrayList<>();
+
+        int start = -1;
+        int end = 0;
+
+        for (int i = 0; i < arrayChar.length; i++) {
+            end = Math.max(end, last[idx(arrayChar[i])]);
+            if (i == end) {
+                result.add(end - start);
+                start = i;
+            }
+
+        }
+
+        return result;
+
+    }
+
+    // 'a'~'z' -> 0~25
+    private int idx(char c) {
+        return c - 'a';
     }
 }
