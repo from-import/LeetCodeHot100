@@ -1,35 +1,50 @@
 package com.xxx;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class LeetCode438 {
+
     public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> res = new ArrayList<>();
-        if (s.length() < p.length()) {
-            return res;
+        if (p.length() > s.length()) {
+            return Collections.emptyList();
         }
 
-        // 正确初始化 target 为 p 排序后的字符串
-        char[] pArr = p.toCharArray();
-        Arrays.sort(pArr);
-        String target = new String(pArr);
-
-        // 遍历 s 的子串
-        for (int i = 0; i <= s.length() - p.length(); i++) {
-            StringBuilder sb = new StringBuilder();
-            for (int j = i; j < i + p.length(); j++) {
-                sb.append(s.charAt(j));
-            }
-            String str = sb.toString();
-            char[] saveStr = str.toCharArray();
-            Arrays.sort(saveStr);
-
-            // 将 saveStr 转为字符串后进行内容比较
-            if (new String(saveStr).equals(target)) {
-                res.add(i);
-            }
+        Map<Character, Integer> targetMap = new HashMap<>();
+        for (int i = 0; i < p.length(); i++) {
+            targetMap.put(p.charAt(i), targetMap.getOrDefault(p.charAt(i), 0) + 1);
         }
-        return res;
+
+        Map<Character, Integer> charMap = new HashMap<>();
+        for (int i = 0; i < p.length(); i++) {
+            charMap.put(s.charAt(i), charMap.getOrDefault(s.charAt(i), 0) + 1);
+        }
+
+        int left = 0;
+        List<Integer> result = new ArrayList<>();
+
+        if (charMap.equals(targetMap)) {
+            result.add(left);
+        }
+
+        for (int right = p.length(); right < s.length(); right++) {
+            if (charMap.get(s.charAt(left)) == 1) {
+                charMap.remove(s.charAt(left));
+            } else {
+                charMap.put(s.charAt(left), charMap.get(s.charAt(left)) - 1);
+            }
+            left++;
+
+            charMap.put(s.charAt(right), charMap.getOrDefault(s.charAt(right), 0) + 1);
+
+            if (charMap.equals(targetMap)) {
+                result.add(left);
+            }
+
+        }
+        return result;
+
+
     }
+
 }
