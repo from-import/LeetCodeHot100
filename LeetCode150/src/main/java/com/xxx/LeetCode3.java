@@ -54,4 +54,24 @@ public class LeetCode3 {
 
         return maxLength;
     }
+
+    public int lengthOfLongestSubstring3(String s) {
+
+        Set<Character> charSet = new HashSet<>();
+        int left = 0;
+        int result = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            while (charSet.contains(c)) {
+                charSet.remove(s.charAt(left));
+                left++;
+            }
+            charSet.add(c);
+            result = Math.max(result, right - left + 1);
+
+        }
+
+        return result;
+
+    }
 }
