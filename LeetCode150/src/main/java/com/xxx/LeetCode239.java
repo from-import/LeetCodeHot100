@@ -1,7 +1,9 @@
 package com.xxx;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public class LeetCode239 {
     public int[] maxSlidingWindow(int[] nums, int k) {
@@ -81,5 +83,35 @@ public class LeetCode239 {
             }
         }
         return result;
+    }
+
+    public int[] maxSlidingWindow4(int[] nums, int k) {
+        Deque<Integer> queue = new ArrayDeque<>();
+
+        for (int i = 0; i < k; i++) {
+            putInWindow(nums[i], i, queue, nums);
+        }
+        int[] result = new int[nums.length - k + 1];
+        result[0] = nums[queue.peekFirst()];
+
+        for (int i = k; i < nums.length; i++) {
+            putInWindow(nums[i], i, queue, nums);
+
+            if (null != queue.peekFirst()) {
+                if (queue.peekFirst() <= i - k) {
+                    queue.removeFirst();
+                }
+
+            }
+            result[i - k + 1] = nums[queue.peekFirst()];
+        }
+        return result;
+    }
+
+    private void putInWindow(int val, int index, Deque<Integer> queue, int[] nums) {
+        while (queue.peekLast() != null && nums[queue.peekLast()] <= val) {
+            queue.removeLast();
+        }
+        queue.add(index);
     }
 }
