@@ -53,4 +53,25 @@ public class LeetCode98 {
         // 递归遍历右子树
         inOrderTraversal(node.right, nums);
     }
+
+    public boolean isValidBST3(TreeNode root) {
+        return check(root, Long.MAX_VALUE, Long.MIN_VALUE);
+    }
+
+    private boolean check(TreeNode root, Long max, Long min) {
+        if (root == null) {
+            return true;
+        }
+        boolean valid = true;
+        if (min != null) {
+            valid = valid && min < root.val;
+        }
+        if (max != null) {
+            valid = valid && max > root.val;
+        }
+        return valid
+                && check(root.left, (long)root.val, min)
+                && check(root.right, max, (long)root.val);
+
+    }
 }
