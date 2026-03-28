@@ -34,4 +34,36 @@ public class LeetCode53 {
         }
         return maxSum;
     }
+
+    public int maxSubArray3(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int[] prefix = new int[nums.length];
+        prefix[0] = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            prefix[i] = prefix[i-1] + nums[i];
+        }
+
+        int[] minPrefix = new int[prefix.length];
+        int minPrefixValue = prefix[0];
+        for (int i = 0; i < prefix.length; i++) {
+            minPrefixValue = Math.min(prefix[i], minPrefixValue);
+            minPrefix[i] = minPrefixValue;
+        }
+
+        int result = nums[0];
+        for (int i = 0; i < prefix.length; i++) {
+            result = Math.max(prefix[i], result);
+            if (i > 0) {
+                int value = prefix[i] - minPrefix[i-1];
+                result = Math.max(result, value);
+            }
+        }
+        return result;
+    }
 }
